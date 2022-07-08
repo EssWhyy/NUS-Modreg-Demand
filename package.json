@@ -1,0 +1,29 @@
+{
+  "name": "nus-modreg-demand",
+  "version": "1.0.0",
+  "description": "Web app to query and sort NUS Modules by ModReg Demand",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm start",
+    "backend": "node server/api.js",
+    "dev": "concurrently \"npm run backend\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EssWhyy/nus-modreg-demand.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EssWhyy/nus-modreg-demand/issues"
+  },
+  "homepage": "https://github.com/EssWhyy/nus-modreg-demand#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "concurrently": "^7.2.2",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
