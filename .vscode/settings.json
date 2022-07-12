@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/61387d5c-2be7-4008-a41a-8349a9cc4342/microsoft.web/sites/subscriptions/61387d5c-2be7-4008-a41a-8349a9cc4342/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/nus-modreg-demand",
+    "appService.deploySubpath": "."
+}
