@@ -19,27 +19,9 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import CloseIcon from '@mui/icons-material/Close';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(name, modcode, roundzero, roundone, roundtwo) {
-  return {
-    name,
-    modcode,
-    roundzero,
-    roundone,
-    roundtwo,
-  };
-}
-
-/*
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-*/
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -103,15 +85,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all modules',
-            }}
-          />
+          
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -162,39 +136,7 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
     </Toolbar>
   );
 };
@@ -206,7 +148,7 @@ EnhancedTableToolbar.propTypes = {
 //Above section should not be edited
 
 
-export default function EnhancedTable({inputRows}) {
+export default function EnhancedTable({inputRows, delRows}) {
 
   const [rows, setRows] = useState(inputRows);
 
@@ -266,10 +208,6 @@ export default function EnhancedTable({inputRows}) {
     setPage(0);
   };
 
-
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -296,27 +234,35 @@ export default function EnhancedTable({inputRows}) {
               {Array.from(rows).slice().sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  const labelId = row.name;
 
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
-                      selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
+                        
+                        <CloseIcon onClick={() => {
+                          var newArray = inputRows.slice()
+                          var index = -1
+                          for (var i = 0; i < newArray.length; i++) {
+                            if (newArray[i].name == labelId){
+                              index = i
+                              break
+                            }
+                          }
+
+                          if (index > -1) {
+                            newArray.splice(index, 1)
+                            console.log("Row removed from table")
+                            delRows(newArray)
+                          }
+
+                        }}></CloseIcon>
                       </TableCell>
                       
                       <TableCell
