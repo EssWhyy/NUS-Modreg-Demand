@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import ButtonAppBar from './components/navbar.js';
 import EnhancedTable from './components/table.js';
-
 
 function App() {
 
@@ -14,6 +13,7 @@ function App() {
   ];
   
   const [tableRows, setTableRows] = useState(currentRows)
+  const [modregSummary, getModRegSummary] = useState("")
 
   //adds row from search bar
   const addRow = () => {
@@ -26,6 +26,16 @@ function App() {
     }
   }
 
+
+  //gets module summary 
+  useEffect(() => {
+    // Update the document title using the browser API
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => getModRegSummary(data.numberOfMods))
+  });
+
+
   return (
     <div className="App">
       <ButtonAppBar></ButtonAppBar>
@@ -36,6 +46,7 @@ function App() {
         <p>
           Check Module Demand for NUS Modules from ModReg Round 0-3
           Current Semester: AY22/23 Sem 1
+          Number of Mods: {modregSummary}
         </p>
 
         <EnhancedTable inputRows={tableRows} delRows={setTableRows}></EnhancedTable>
