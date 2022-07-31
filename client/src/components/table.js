@@ -35,7 +35,7 @@ function getComparator(order, orderBy) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'modname',
     numeric: false,
     disablePadding: true,
     label: 'Module Name',
@@ -166,7 +166,7 @@ export default function EnhancedTable({inputRows, delRows}) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.modname);
       setSelected(newSelecteds);
       return;
     }
@@ -228,15 +228,15 @@ export default function EnhancedTable({inputRows, delRows}) {
               {Array.from(rows).slice().sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const labelId = row.name;
+                  const labelId = row.modname;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.modname)}
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.modname}
                     >
                       <TableCell padding="checkbox">
                         
@@ -244,7 +244,7 @@ export default function EnhancedTable({inputRows, delRows}) {
                           var newArray = inputRows.slice()
                           var index = -1
                           for (var i = 0; i < newArray.length; i++) {
-                            if (newArray[i].name == labelId){
+                            if (newArray[i].modname == labelId){
                               index = i
                               break
                             }
@@ -265,7 +265,7 @@ export default function EnhancedTable({inputRows, delRows}) {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.modname}
                       </TableCell>
                       <TableCell align="right">{row.modcode}</TableCell>
                       <TableCell align="right">{row.roundzero}</TableCell>
