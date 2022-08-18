@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import ButtonAppBar from './components/navbar.js';
 import EnhancedTable from './components/table.js';
+import SearchBar from './components/searchbar.js';
 
 function App() {
 
@@ -48,9 +49,8 @@ function App() {
   return (
     <div className="App">
       <ButtonAppBar></ButtonAppBar>
-      <header className="App-header">     
 
-        <button onClick={addRow}>Add a Module</button>
+      <header className="App-header">     
 
         <p>
           Check Module Demand for NUS Modules from ModReg Round 0-3
@@ -58,6 +58,11 @@ function App() {
           Number of Mods: {modregSummary}
         </p>
 
+
+        <SearchBar addRow2={setTableRows}></SearchBar>
+        <button onClick={addRow}>Add a Module</button>
+
+        
         <EnhancedTable inputRows={tableRows} delRows={setTableRows}></EnhancedTable>
       </header>
     </div>
